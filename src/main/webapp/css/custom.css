@@ -1,0 +1,36 @@
+.grimoire {
+	background-image: url('../images/grimoire.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.whiteFont {
+	color: white;
+}
+
+.buttonOverride01,
+input[type="submit"].buttonOverride01,
+input[type="reset"].buttonOverride01,
+input[type="button"].buttonOverride01 {
+	color: #FFF;
+	background-color: #DB7D48;
+	border-color: #DB7D48;
+}
+
+.buttonOverride01:hover,
+input[type="submit"].buttonOverride01:hover,
+input[type="reset"].buttonOverride01:hover,
+input[type="button"].buttonOverride01:hover {
+	color: #FFF;
+	background-color: #8E5C40;
+	border-color: #8E5C40;
+}
+
+.buttonOverride01:focus,
+input[type="submit"].buttonOverride01:focus,
+input[type="reset"].buttonOverride01:focus,
+input[type="button"].buttonOverride01:focus {
+	color: #FFF;
+	background-color: #DB7D48;
+	border-color: #DB7D48;
+}
