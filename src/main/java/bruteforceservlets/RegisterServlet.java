@@ -1,6 +1,8 @@
 package bruteforceservlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +44,11 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
+		
+		RequestDispatcher sendHuman = request.getRequestDispatcher("dashboard.html");
+		sendHuman.forward(request, response);
 	}
 
 }
