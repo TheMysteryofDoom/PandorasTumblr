@@ -18,7 +18,7 @@ public class ViewController {
 		System.out.println("This is the View controller Servlet mapped to Register");
 		System.out.println(user.getUsername());
 		
-        return "pages/index.html";
+        return "pages/crumbleboard.jsp";
         //Done: Where does the return lead to.
         //To Do: Why is Post not supported.
     }
@@ -30,7 +30,7 @@ public class ViewController {
 		System.out.println("This is the View controller Servlet mapped to But with GET");
 		System.out.println(user.getUsername());
 		
-        return "pages/index.html";
+        return "crumbleboard";
         //Done: Where does the return lead to.
         //To Do: Why is Post not supported.
     }
