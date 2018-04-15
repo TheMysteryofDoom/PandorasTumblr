@@ -22,4 +22,16 @@ public class ViewController {
         //Done: Where does the return lead to.
         //To Do: Why is Post not supported.
     }
+	
+	@RequestMapping(value = "register", method = RequestMethod.GET)
+    public String register2(@ModelAttribute("newCrumblrUser")CrumblrUser user) {
+		
+		//Test
+		System.out.println("This is the View controller Servlet mapped to But with GET");
+		System.out.println(user.getUsername());
+		
+        return "pages/index.html";
+        //Done: Where does the return lead to.
+        //To Do: Why is Post not supported.
+    }
 }
