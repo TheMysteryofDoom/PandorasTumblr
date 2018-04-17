@@ -24,16 +24,4 @@ public class ViewController {
 		
         return "pages/crumbleboard.jsp";
     }
-	
-	@RequestMapping(value = "register", method = RequestMethod.GET)
-    public String register2(@ModelAttribute("newCrumblrUser")CrumblrUser user) {
-		
-		//Test
-		System.out.println("This is the View controller Servlet mapped to But with GET");
-		System.out.println(user.getUsername());
-		
-        return "crumbleboard";
-        //Done: Where does the return lead to.
-        //To Do: Why is Post not supported.
-    }
 }
