@@ -4,26 +4,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Crumbleboaed | Crumblr</title>
+<title>Crumbleboard | Crumblr</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../css/normalize.css">
 <link rel="stylesheet" href="../css/skeleton.css">
 <link rel="stylesheet" href="../css/custom.css">
-
+<%@ include file="../javascript/SessionCheck2.jsp" %>
 </head>
 <body>
 
 <div class ="container">
 	<div class="row">
 		<div class="twelve columns">
-		<h1>User's Crumblr</h1>
+		<h1><%= session.getAttribute("username") %>'s Crumblr</h1>
 		</div>
 	</div>
  	<div class="row">
  		<div class="four columns">
- 			<p>[Username Space]</p>
+ 			<p><%= session.getAttribute("username") %></p>
  			<p>Description<p>
  			<form action="/logout" method="post">
 				<input type="submit" value="Sign Out"/>

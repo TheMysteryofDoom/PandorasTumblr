@@ -1,15 +1,19 @@
 package com.example.demo;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @Controller
 public class ViewController {
 	
+	@Autowired
+	private Authentication authentication;
 	
 	@Autowired
 	private Registration registration;
@@ -18,14 +22,38 @@ public class ViewController {
 	@RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@ModelAttribute("newCrumblrUser")CrumblrUser user) {
 		
-		
-		//Test
 		System.out.println("This is the View controller Servlet mapped to Register");
-		System.out.println(user.getUsername());
-		
 		registration.Register(user);
-		//Registration.Register(user);
-		
-        return "pages/crumbleboard.jsp";
+        return "pages/home.jsp";
     }
+	
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+    public String login(@ModelAttribute("newCrumblrUser")CrumblrUser user, HttpServletRequest request, HttpSession session) {
+		//===================
+		session.invalidate();
+		//===================
+		System.out.println("This is the View controller Servlet mapped to Login");
+		Boolean correctPass = authentication.passCheck(user);
+		
+		if (correctPass == true){
+			user = authentication.grabDetails(user);
+			//========================
+			HttpSession newSession = request.getSession();
+			session = newSession;
+			session.setAttribute("username", user.getUsername());
+			//========================
+			System.out.println("This session belongs to "+session.getAttribute("username").toString());
+			//========================
+			return "pages/crumbleboard.jsp";
+		} else {
+			return "pages/home.jsp";
+		}
+    }
+	
+	@RequestMapping(value = "logout", method = RequestMethod.POST)
+	public String logout(HttpServletRequest request, HttpSession session){
+		session.invalidate();
+		System.out.println("Logged out");
+		return "pages/home.jsp";
+	}
 }
