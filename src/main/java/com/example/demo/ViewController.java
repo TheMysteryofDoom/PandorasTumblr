@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +19,9 @@ public class ViewController {
 	
 	@Autowired
 	private Registration registration;
+	
+	@Autowired
+	private CrumblrPostRepository repository;
 	
 	//@RequestMapping(value = "register")
 	@RequestMapping(value = "register", method = RequestMethod.POST)
@@ -43,7 +48,13 @@ public class ViewController {
 			session.setAttribute("username", user.getUsername());
 			//========================
 			System.out.println("This session belongs to "+session.getAttribute("username").toString());
-			//========================
+			//=====This code block is for Post Writing======
+			System.out.println("Let's get the data");
+			List<CrumblrPost> posts = repository.findByOwner(user.getUsername());
+			System.out.println("We found the data");
+			System.out.println(posts.get(0).getContent());
+			
+			//==============================================
 			return "pages/crumbleboard.jsp";
 		} else {
 			return "pages/home.jsp";

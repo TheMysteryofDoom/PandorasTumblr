@@ -30,9 +30,10 @@
 			</form>
  		</div>
  		<div class="eight columns">
- 			<form>
- 				<input type="file" id="pictureFile" name="pictureFile">
- 				<input type="text" name="blogPost" id="blogPost"> 
+ 			<form action ="/crumblrPost" modelAttribute="CrumblrPost" enctype="multipart/form-data" method="post">
+ 				<input type="hidden" id ="owner" name="owner" value="<%= session.getAttribute("username") %>">
+ 				<input type="file" id="file" name="file">
+ 				<input type="text" name="content" id="content"> 
  				<input type="submit" value="Post">
  			</form>
  			<hr>

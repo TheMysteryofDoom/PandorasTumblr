@@ -12,7 +12,7 @@ public class Registration {
 	private CrumblrUserRepository repository;
 	
 	public void Register(CrumblrUser me){
-		System.out.println(me.getUsername());
+		//System.out.println(me.getUsername());
 		repository.save(me);
 	}
 }

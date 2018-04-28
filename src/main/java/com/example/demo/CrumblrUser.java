@@ -19,7 +19,7 @@ public class CrumblrUser {
 	@Override
 	public String toString() {
         return String.format(
-                "Customer[id=%s, firstName='%s', username='%s', password='%s', email='%s']",
+                "CrumblrUser[id=%s, firstName='%s', username='%s', password='%s', email='%s']",
                 id, firstName, username, password, email);
     }
 
