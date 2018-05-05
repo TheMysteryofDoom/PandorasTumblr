@@ -1,5 +1,9 @@
+<%@page import="java.util.Collections"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
+<%@ page import ="com.example.demo.CrumblrPost"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +17,7 @@
 <link rel="stylesheet" href="../css/custom.css">
 <%@ include file="../javascript/SessionCheck2.jsp" %>
 </head>
-<body>
-
+<body class ="deepOrange">
 <div class ="container">
 	<div class="row">
 		<div class="twelve columns">
@@ -38,7 +41,25 @@
  			</form>
  			<hr>
  			<p>Post Spaces</p>
- 			<p>Description<p>
+ 			<%
+ 			List<CrumblrPost> crumbleWall = new ArrayList<CrumblrPost>();
+			crumbleWall = (ArrayList)session.getAttribute("posts");
+			String content = "";
+			String owner = "";
+			String date = "";
+			Collections.reverse(crumbleWall);
+			int i = 0;
+			if (crumbleWall.iterator().hasNext()){
+			for(CrumblrPost posts : crumbleWall){
+				i++;
+				content = posts.getContent();
+				owner = posts.getOwner();
+				date = posts.getDate();
+ 			%>
+ 			<p><%= content %>
+ 			<%= i %></p>
+ 			<%}} %>
+ 			<p>EndofLine<p>
  		</div>
  	</div>
 </div>

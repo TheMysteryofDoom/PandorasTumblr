@@ -51,8 +51,9 @@ public class ViewController {
 			//=====This code block is for Post Writing======
 			System.out.println("Let's get the data");
 			List<CrumblrPost> posts = repository.findByOwner(user.getUsername());
+			session.setAttribute("posts", posts);
 			System.out.println("We found the data");
-			System.out.println(posts.get(0).getContent());
+			//System.out.println(posts.get(0).getContent());
 			
 			//==============================================
 			return "pages/crumbleboard.jsp";
