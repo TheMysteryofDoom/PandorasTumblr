@@ -25,26 +25,33 @@
 		</div>
 	</div>
  	<div class="row">
- 		<div class="four columns"> <!-- Left Half of the Screen -->
+ 		<div class="four columns whiteout postFrame"> <!-- Left Half of the Screen -->
  			
  			<p><%= session.getAttribute("currentView") %></p>
  			<p>Description<p>
+ 			<form action="/search" method="post">
+				<input type="text" placeholder="Search Crumblr"/><input class="buttonOverride01" type="submit" value="Search"/>
+			</form>
  			<form action="/logout" method="post">
-				<input type="submit" value="Sign Out"/>
+				<input class="buttonOverride01" type="submit" value="Sign Out"/>
 			</form>
  		</div>
  		<div class="eight columns"> <!-- Right Half of the Screen -->
  			<% if (session.getAttribute("currentView").equals(session.getAttribute("username"))){ %>
- 			<!-- Display's if on own blog -->
- 			<form action ="/crumblrPost" modelAttribute="CrumblrPost" enctype="multipart/form-data" method="post">
- 				<input type="hidden" id ="owner" name="owner" value="<%= session.getAttribute("username") %>">
- 				<input type="file" id="file" name="file">
- 				<input type="text" name="content" id="content"> 
- 				<input type="submit" value="Post">
- 			</form>
+ 			<div class="row whiteout postFrame">
+	 			<!-- Display's if on own blog -->
+	 			<h4>Post something new:</h4>
+	 			<form action ="/crumblrPost" modelAttribute="CrumblrPost" enctype="multipart/form-data" method="post">
+	 				<input type="hidden" id ="owner" name="owner" value="<%= session.getAttribute("username") %>">
+	 				<!--  <input type="text" name="content" id="content"> -->
+	 				<textarea class="lockdown" name="content" id="content"></textarea>
+	 				<input type="file" id="file" name="file">
+	 				<input class="buttonOverride01" type="submit" value="Post">
+	 			</form>
+ 			</div>
  			<hr>
  			<%} %>
- 			<p>Post Spaces</p> <!-- Posts Are Written Here -->
+ 			<!-- Posts Are Written Here -->
  			<% 
  			List<CrumblrPost> crumbleWall = new ArrayList<CrumblrPost>();
 			crumbleWall = (ArrayList)session.getAttribute("posts");
@@ -56,7 +63,7 @@
 			//int i = 0;
 			if (crumbleWall.iterator().hasNext()){
 			for(CrumblrPost posts : crumbleWall){
-				//i++;
+				//Post Loop;
 				content = posts.getContent();
 				owner = posts.getOwner();
 				date = posts.getDate();
@@ -66,13 +73,15 @@
 					image = "";
 				}
  			%> <!-- Post Writer End -->
+ 			<div class="row postFrame whiteout"> <!-- Post Block -->
  			<% if (!(image.equals(""))){ %>
  				<img class="u-max-full-width" src="data:image/jpg;base64, <%=image%>" alt="Picture" />
  			<% } %>
  			<p><%= content %><br>
  			Posted at <%= posts.getDate() %></p>
+ 			</div> <!-- Post Block -->
+ 			<br>
  			<%}} %> <!-- End of Post Loop -->
- 			<p>EndofLine</p>
  		</div>
  	</div>
 </div>
