@@ -29,7 +29,7 @@ public class ViewController {
 		
 		System.out.println("This is the View controller Servlet mapped to Register");
 		registration.Register(user);
-        return "pages/home.jsp";
+        return "index.jsp";
     }
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -46,6 +46,7 @@ public class ViewController {
 			HttpSession newSession = request.getSession();
 			session = newSession;
 			session.setAttribute("username", user.getUsername());
+			session.setAttribute("currentView", user.getUsername());
 			//========================
 			System.out.println("This session belongs to "+session.getAttribute("username").toString());
 			//=====This code block is for Post Writing======
@@ -58,7 +59,7 @@ public class ViewController {
 			//==============================================
 			return "pages/crumbleboard.jsp";
 		} else {
-			return "pages/home.jsp";
+			return "index.jsp";
 		}
     }
 	
@@ -66,6 +67,6 @@ public class ViewController {
 	public String logout(HttpServletRequest request, HttpSession session){
 		session.invalidate();
 		System.out.println("Logged out");
-		return "pages/home.jsp";
+		return "index.jsp";
 	}
 }
