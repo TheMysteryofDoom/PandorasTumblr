@@ -69,4 +69,10 @@ public class ViewController {
 		System.out.println("Logged out");
 		return "index.jsp";
 	}
+	
+	@RequestMapping("/") 
+    public String home(){
+        return "index.jsp"; 
+    }  
+	
 }

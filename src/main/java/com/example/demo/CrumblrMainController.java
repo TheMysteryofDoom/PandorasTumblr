@@ -39,12 +39,12 @@ public class CrumblrMainController {
         crumblrPost.setDate(dtf.format(instant));
         crumblrPost.setContent(postManagement.URLFinder(crumblrPost.getContent()));
         //======================================
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getSize());
+        //System.out.println(file.getOriginalFilename());
+        //System.out.println(file.getSize());
         crumblrPost.encodeFileToBase64Binary(file.getBytes());
 		//========
-		System.out.println(crumblrPost.getOwner());
-		System.out.println(crumblrPost.getContent());
+		//System.out.println(crumblrPost.getOwner());
+		//System.out.println(crumblrPost.getContent());
 		//========
 		postManagement.savePost(crumblrPost);
 		postManagement.attachPosts(session);
