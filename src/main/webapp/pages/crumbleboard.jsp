@@ -18,6 +18,11 @@
 <%@ include file="../javascript/SessionCheck2.jsp" %>
 </head>
 <body class ="deepOrange">
+<div class="container deepOrange">
+	<form action="/home" method="post">
+	<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
+	</form>
+</div>
 <div class ="container">
 	<div class="row">
 		<div class="twelve columns" align="center">

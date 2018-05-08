@@ -2,7 +2,6 @@ package com.example.demo;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -24,7 +23,9 @@ public class CrumblrMainController {
 	
 	@Autowired
 	private PostManagement postManagement;
-	private CrumblrUserRepository crumblrUserRepository;
+	
+	@Autowired
+	private CrumblrUserRepository repository;
 	
 	@RequestMapping(value = "crumblrPost" ,method = RequestMethod.POST)
 	public String postEntry(@ModelAttribute("CrumblrPost")CrumblrPost crumblrPost, @RequestParam("file") MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException{
@@ -36,6 +37,7 @@ public class CrumblrMainController {
 		Instant instant = Instant.now();
 		//======================================
         crumblrPost.setDate(dtf.format(instant));
+        crumblrPost.setContent(postManagement.URLFinder(crumblrPost.getContent()));
         //======================================
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
@@ -46,16 +48,17 @@ public class CrumblrMainController {
 		//========
 		postManagement.savePost(crumblrPost);
 		postManagement.attachPosts(session);
-		
+
 		return "pages/crumbleboard.jsp";
 	}
 	
 	@RequestMapping(value = "search" ,method = RequestMethod.POST)
-	public String searchEverything(HttpServletRequest request, HttpSession session){
+	public String searchEverything(@RequestParam("search") String search, HttpSession session){
 		CrumblrUser searched;
+		System.out.println(search);
 		int searchResults = 0; //Search Results Counter
 		try{
-			searched = crumblrUserRepository.findByUsername(request.getAttribute("search").toString());
+			searched = repository.findByUsername(search);
 			session.setAttribute("userSearch", searched.getUsername());
 			searchResults++;
 		} catch (Exception s){
@@ -65,6 +68,21 @@ public class CrumblrMainController {
 		session.setAttribute("searchResults", searchResults);
 		
 		return "pages/searchresults.jsp";
+		
+	}
+	
+	@RequestMapping(value = "visitUser" ,method = RequestMethod.POST)
+	public String visit(@RequestParam("userView") String user, HttpSession session){
+		
+		session.setAttribute("currentView", user);
+		//========================
+		//=====This code block is for Post Writing======
+		System.out.println("Let's get the data");
+		//List<CrumblrPost> posts = repository.findByOwner(user.getUsername());
+		postManagement.attachPosts(session, user);
+		System.out.println("We found the data");;
+		
+		return "pages/crumbleboard.jsp";
 		
 	}
 
