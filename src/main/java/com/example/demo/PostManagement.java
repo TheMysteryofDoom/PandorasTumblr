@@ -28,23 +28,22 @@ public class PostManagement {
 	}
 	
 	public String URLFinder(String postText) {
-        //String s = args[0];
-        // separate input by spaces ( URLs don't have spaces )
         String [] parts = postText.split("\\s+");
         StringBuilder finalOutput = new StringBuilder();
-        // Attempt to convert each item into an URL.   
         for( String item : parts ) try {
             URL url = new URL(item);
             // If possible then replace with anchor...
             finalOutput.append("<a href=\"" + url + "\">"+ url + "</a> " );
             //System.out.print("<a href=\"" + url + "\">"+ url + "</a> " );    
         } catch (MalformedURLException e) {
-            // If there was an URL that was not it!...
         	finalOutput.append(item + " " );
             //System.out.print( item + " " );
         }
-
         return finalOutput.toString();
     }
+	
+	public void delete(String id){
+		repository.deleteById(id);
+	}
 
 }

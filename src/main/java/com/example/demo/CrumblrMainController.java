@@ -77,13 +77,20 @@ public class CrumblrMainController {
 		session.setAttribute("currentView", user);
 		//========================
 		//=====This code block is for Post Writing======
-		System.out.println("Let's get the data");
+		//System.out.println("Let's get the data");
 		//List<CrumblrPost> posts = repository.findByOwner(user.getUsername());
 		postManagement.attachPosts(session, user);
-		System.out.println("We found the data");;
+		//System.out.println("We found the data");;
 		
 		return "pages/crumbleboard.jsp";
 		
+	}
+	
+	@RequestMapping(value="delete",method = RequestMethod.POST)
+	public String deletePost(@RequestParam("postID") String postID, HttpSession session){
+		postManagement.delete(postID);
+		postManagement.attachPosts(session, session.getAttribute("username").toString());
+		return "pages/crumbleboard.jsp";
 	}
 
 }

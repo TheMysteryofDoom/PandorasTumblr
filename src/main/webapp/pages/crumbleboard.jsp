@@ -19,7 +19,8 @@
 </head>
 <body class ="deepOrange">
 <div class="container deepOrange">
-	<form action="/home" method="post">
+	<form action="/visitUser" method="post">
+	<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
 	<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
 	</form>
 </div>
@@ -81,10 +82,18 @@
  			%> <!-- Post Writer End -->
  			<div class="row postFrame whiteout"> <!-- Post Block -->
  			<% if (!(image.equals(""))){ %>
- 				<img class="u-max-full-width" src="data:image/jpg;base64, <%=image%>" alt="Picture" />
+ 				<img class="u-max-full-width" src="data:image/jpg;base64, <%=image%>" alt="[File Not Considered an Image]" />
  			<% } %>
  			<p><%= content %><br>
  			Posted at <%= posts.getDate() %> UTC</p>
+ 			<!-- Delete Button space -->
+ 			<% if (session.getAttribute("currentView").equals(session.getAttribute("username"))){ %>
+ 			<form action="/delete" method="post">
+ 			<input type="hidden" name="postID" id="postID" value="<%= posts.getId() %>">
+ 			<input class="button" type="submit" value="delete">
+ 			</form>
+ 			<%} %>
+ 			<!-- End of Delete Button space -->
  			</div> <!-- Post Block -->
  			<br>
  			<%}} %> <!-- End of Post Loop -->
