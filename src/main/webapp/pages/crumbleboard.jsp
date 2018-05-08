@@ -20,8 +20,9 @@
 <body class ="deepOrange">
 <div class ="container">
 	<div class="row">
-		<div class="twelve columns">
+		<div class="twelve columns" align="center">
 		<h1><%= session.getAttribute("currentView") %>'s Crumblr</h1>
+		<br>
 		</div>
 	</div>
  	<div class="row">
@@ -30,7 +31,7 @@
  			<p><%= session.getAttribute("currentView") %></p>
  			<p>Description<p>
  			<form action="/search" method="post">
-				<input type="text" placeholder="Search Crumblr"/><input class="buttonOverride01" type="submit" value="Search"/>
+				<input type="text" name="search" id="search" placeholder="Search Crumblr"/><input class="buttonOverride01" type="submit" value="Search"/>
 			</form>
  			<form action="/logout" method="post">
 				<input class="buttonOverride01" type="submit" value="Sign Out"/>
@@ -78,7 +79,7 @@
  				<img class="u-max-full-width" src="data:image/jpg;base64, <%=image%>" alt="Picture" />
  			<% } %>
  			<p><%= content %><br>
- 			Posted at <%= posts.getDate() %></p>
+ 			Posted at <%= posts.getDate() %> UTC</p>
  			</div> <!-- Post Block -->
  			<br>
  			<%}} %> <!-- End of Post Loop -->

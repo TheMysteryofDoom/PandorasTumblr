@@ -1,8 +1,13 @@
 package com.example.demo;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,13 +24,18 @@ public class CrumblrMainController {
 	
 	@Autowired
 	private PostManagement postManagement;
+	private CrumblrUserRepository crumblrUserRepository;
 	
 	@RequestMapping(value = "crumblrPost" ,method = RequestMethod.POST)
 	public String postEntry(@ModelAttribute("CrumblrPost")CrumblrPost crumblrPost, @RequestParam("file") MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		LocalDateTime now = LocalDateTime.now();
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.MEDIUM )
+                .withLocale( Locale.UK )
+                .withZone( ZoneId.of("UTC") );
+		//LocalDateTime now = LocalDateTime.now();
+		Instant instant = Instant.now();
 		//======================================
-        crumblrPost.setDate(dtf.format(now));
+        crumblrPost.setDate(dtf.format(instant));
         //======================================
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
@@ -38,6 +48,24 @@ public class CrumblrMainController {
 		postManagement.attachPosts(session);
 		
 		return "pages/crumbleboard.jsp";
+	}
+	
+	@RequestMapping(value = "search" ,method = RequestMethod.POST)
+	public String searchEverything(HttpServletRequest request, HttpSession session){
+		CrumblrUser searched;
+		int searchResults = 0; //Search Results Counter
+		try{
+			searched = crumblrUserRepository.findByUsername(request.getAttribute("search").toString());
+			session.setAttribute("userSearch", searched.getUsername());
+			searchResults++;
+		} catch (Exception s){
+			System.out.println("Username Not Found");
+		}
+		
+		session.setAttribute("searchResults", searchResults);
+		
+		return "pages/searchresults.jsp";
+		
 	}
 
 }
