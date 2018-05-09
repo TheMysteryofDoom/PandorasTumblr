@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CrumblrPostRepository extends MongoRepository<CrumblrPost, String> {
 	
-	public List<CrumblrPost> findByOwner(String owner);
-	public CrumblrPost findByContent(String Content);
+	List<CrumblrPost> findByOwner(String owner);
+	CrumblrPost findByContent(String Content);
 }

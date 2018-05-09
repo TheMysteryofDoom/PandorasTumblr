@@ -27,25 +27,18 @@ public class CrumblrMainController {
 	@Autowired
 	private CrumblrUserRepository repository;
 	
+	@Autowired
+	private CrumblrCommentRepository comsRepository;
+	
 	@RequestMapping(value = "crumblrPost" ,method = RequestMethod.POST)
 	public String postEntry(@ModelAttribute("CrumblrPost")CrumblrPost crumblrPost, @RequestParam("file") MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException{
-		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.MEDIUM )
                 .withLocale( Locale.UK )
                 .withZone( ZoneId.of("UTC") );
-		//LocalDateTime now = LocalDateTime.now();
 		Instant instant = Instant.now();
-		//======================================
         crumblrPost.setDate(dtf.format(instant));
         crumblrPost.setContent(postManagement.URLFinder(crumblrPost.getContent()));
-        //======================================
-        //System.out.println(file.getOriginalFilename());
-        //System.out.println(file.getSize());
         crumblrPost.encodeFileToBase64Binary(file.getBytes());
-		//========
-		//System.out.println(crumblrPost.getOwner());
-		//System.out.println(crumblrPost.getContent());
-		//========
 		postManagement.savePost(crumblrPost);
 		postManagement.attachPosts(session);
 
@@ -75,12 +68,7 @@ public class CrumblrMainController {
 	public String visit(@RequestParam("userView") String user, HttpSession session){
 		
 		session.setAttribute("currentView", user);
-		//========================
-		//=====This code block is for Post Writing======
-		//System.out.println("Let's get the data");
-		//List<CrumblrPost> posts = repository.findByOwner(user.getUsername());
 		postManagement.attachPosts(session, user);
-		//System.out.println("We found the data");;
 		
 		return "pages/crumbleboard.jsp";
 		
@@ -91,6 +79,18 @@ public class CrumblrMainController {
 		postManagement.delete(postID);
 		postManagement.attachPosts(session, session.getAttribute("username").toString());
 		return "pages/crumbleboard.jsp";
+	}
+	
+	@RequestMapping(value="comment",method = RequestMethod.POST)
+	public String goToCommentsPage(@RequestParam("postID") String postID, HttpSession session){
+		postManagement.attachPostByID(session, postID);
+		return "pages/comments.jsp";
+	}
+	
+	@RequestMapping(value="comment02",method = RequestMethod.POST)
+	public String leaveComment(@ModelAttribute("CrumblrComment")CrumblrComment crumblrComment, HttpSession session){
+		comsRepository.save(crumblrComment);
+		return "pages/comments.jsp";
 	}
 
 }

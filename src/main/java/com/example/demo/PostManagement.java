@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +26,12 @@ public class PostManagement {
 	
 	public void attachPosts(HttpSession session, String user){
 		session.setAttribute("posts", repository.findByOwner(user));
+	}
+	
+	public void attachPostByID(HttpSession session, String postID){
+		CrumblrPost commentTarget = repository.findById(postID).get();
+		session.setAttribute("commentOn", commentTarget);
+		//Problematic Area (Class cast exception)
 	}
 	
 	public String URLFinder(String postText) {
