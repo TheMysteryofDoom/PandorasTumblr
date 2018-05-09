@@ -84,12 +84,14 @@ public class CrumblrMainController {
 	@RequestMapping(value="comment",method = RequestMethod.POST)
 	public String goToCommentsPage(@RequestParam("postID") String postID, HttpSession session){
 		postManagement.attachPostByID(session, postID);
+		session.setAttribute("comments", comsRepository.findByOnPostId(postID));
 		return "pages/comments.jsp";
 	}
 	
 	@RequestMapping(value="comment02",method = RequestMethod.POST)
 	public String leaveComment(@ModelAttribute("CrumblrComment")CrumblrComment crumblrComment, HttpSession session){
 		comsRepository.save(crumblrComment);
+		session.setAttribute("comments", comsRepository.findByOnPostId(crumblrComment.getOnPostId()));
 		return "pages/comments.jsp";
 	}
 

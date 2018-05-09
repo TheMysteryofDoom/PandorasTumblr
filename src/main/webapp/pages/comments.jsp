@@ -4,6 +4,7 @@
 <%@ page import ="java.util.ArrayList"%>
 <%@ page import ="java.util.List"%>
 <%@ page import ="com.example.demo.CrumblrPost"%>
+<%@ page import ="com.example.demo.CrumblrComment"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,19 +77,35 @@
  			<!-- End of Delete Button space -->
  			</div> <!-- Post Block -->
  			<br>
- 			<% %> <!-- End of Post Loop -->
  			<!-- Comment Area -->
  			<div class="row whiteout postFrame">
 	 			<!-- Display's if on own blog -->
+	 			<div class="three columns">
 	 			<h5>Comment:</h5>
+	 			</div>
+	 			<div class="nine columns">
 	 			<form action ="/comment02" modelAttribute="CrumblrComment" method="post">
 	 				<input type="hidden" name="onPostId" id="onPostId" value="<%= postID %>">
 	 				<input type="hidden" id ="writer" name="writer" value="<%= session.getAttribute("username") %>">
 	 				<input class="u-max-full-width" type="text" name="text" id="text">
-	 				<input class="buttonOverride01" type="submit" value="Comment">
+	 				<input class="button" type="submit" value="Leave Comment">
 	 			</form>
+	 			</div>
  			</div>
  			<!-- End of Comment Area -->
+ 			<div class = "row whiteout postFrame">
+ 			<hr>
+ 			<p><b>All Comments:</b></p>
+ 			<%
+ 			List<CrumblrComment> commentPile = new ArrayList<CrumblrComment>();
+ 			commentPile = (ArrayList)session.getAttribute("comments");
+ 			//Collections.reverse(commentPile);
+ 			if(commentPile.iterator().hasNext()){
+ 			for(CrumblrComment comments: commentPile){	
+ 			%>
+ 			<p><%= comments.getWriter() %>: <%= comments.getText() %></p>
+ 			<%}} %>
+ 			</div>
  		</div>
  	</div>
 </div>
