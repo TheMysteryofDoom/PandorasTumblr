@@ -23,12 +23,17 @@ public class ViewController {
 	@Autowired
 	private CrumblrPostRepository repository;
 	
+	@Autowired 
+	private CrumblrFollowersRepository followRepository;
+	
 	//@RequestMapping(value = "register")
 	@RequestMapping(value = "register", method = RequestMethod.POST)
     public String register(@ModelAttribute("newCrumblrUser")CrumblrUser user) {
 		
 		System.out.println("This is the View controller Servlet mapped to Register");
 		registration.Register(user);
+		CrumblrFollowers myFollowers = new CrumblrFollowers(user.getUsername());
+		followRepository.save(myFollowers);
         return "index.jsp";
     }
 	

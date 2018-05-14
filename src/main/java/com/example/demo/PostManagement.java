@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,9 @@ public class PostManagement {
 	}
 	
 	public void attachPosts(HttpSession session){
+		//List<CrumblrPost> postSet = repository.findByOwner(session.getAttribute("username").toString());
+		//Collections.reverse(postSet);
+		//session.setAttribute("posts", postSet);
 		session.setAttribute("posts", repository.findByOwner(session.getAttribute("username").toString()));
 	}
 	

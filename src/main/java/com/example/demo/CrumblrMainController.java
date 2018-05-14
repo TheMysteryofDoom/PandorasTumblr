@@ -30,6 +30,9 @@ public class CrumblrMainController {
 	@Autowired
 	private CrumblrCommentRepository comsRepository;
 	
+	@Autowired 
+	private CrumblrFollowersRepository followRepository;
+	
 	@RequestMapping(value = "crumblrPost" ,method = RequestMethod.POST)
 	public String postEntry(@ModelAttribute("CrumblrPost")CrumblrPost crumblrPost, @RequestParam("file") MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException{
 		DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.MEDIUM )
@@ -93,6 +96,41 @@ public class CrumblrMainController {
 		comsRepository.save(crumblrComment);
 		session.setAttribute("comments", comsRepository.findByOnPostId(crumblrComment.getOnPostId()));
 		return "pages/comments.jsp";
+	}
+	
+	@RequestMapping(value="follow",method = RequestMethod.POST)
+	public String follow(@RequestParam("pageOwner")String pageOwner, HttpSession session){
+		CrumblrFollowers myset = null;
+		try{
+		myset = followRepository.findByUsername(session.getAttribute("username").toString());
+		} catch (Exception e){
+			System.out.println("We went here...");
+			myset = new CrumblrFollowers();
+			myset.setUsername(session.getAttribute("username").toString());
+		}
+		
+		System.out.println("Now Follwoing: "+ pageOwner);
+		myset.addFollower(pageOwner);
+		postManagement.attachPosts(session, session.getAttribute("currentView").toString());
+		followRepository.save(myset);
+		return "pages/crumbleboard.jsp";
+	}
+	
+	@RequestMapping(value="unfollow",method = RequestMethod.POST)
+	public String unfollow(@RequestParam("pageOwner")String pageOwner,HttpSession session){
+		CrumblrFollowers myset;
+		try{
+		myset = followRepository.findByUsername(session.getAttribute("username").toString());
+		} catch (Exception e){
+			myset = new CrumblrFollowers();
+			myset.setUsername(session.getAttribute("username").toString());
+		}
+		
+		
+		myset.removeFollower(pageOwner);
+		postManagement.attachPosts(session, session.getAttribute("currentView").toString());
+		followRepository.save(myset);
+		return "pages/crumbleboard.jsp";
 	}
 
 }
