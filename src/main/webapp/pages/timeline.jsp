@@ -19,15 +19,30 @@
 </head>
 <body class ="deepOrange">
 <div class="container deepOrange">
-	<form action="/visitUser" method="post">
-	<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-	<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
-	</form>
+	<div class="row">
+		<div class="three columns">
+			<form action="/visitUser" method="post">
+			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="<%= session.getAttribute("username") %>">
+			</form>
+		</div>
+		<div class="three columns">
+			<form action="/timeline" method="post">
+			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="Your Timeline">
+			</form>
+		</div>
+		<div class="three columns">
+			<form action="/logout" method="post">
+				<input class="buttonOverride01 u-pull-max-width" type="submit" value="Sign Out"/>
+			</form>
+		</div>
+	</div>
 </div>
 <div class ="container">
 	<div class="row">
 		<div class="twelve columns" align="center">
-		<h1><%= session.getAttribute("currentView") %>'s Timeline</h1>
+		<h1>Your Timeline</h1>
 		<br>
 		</div>
 	</div>
@@ -51,26 +66,8 @@
  			<form action="/search" method="post">
 				<input type="text" name="search" id="search" placeholder="Search Crumblr"/><input class="button" type="submit" value="Search"/>
 			</form>
- 			<form action="/logout" method="post">
-				<input class="button" type="submit" value="Sign Out"/>
-			</form>
  		</div>
  		<div class="eight columns"> <!-- Right Half of the Screen -->
- 			<% if (session.getAttribute("currentView").equals(session.getAttribute("username"))){ %>
- 			<div class="row whiteout postFrame">
-	 			<!-- Display's if on own blog -->
-	 			<h4>Post something new:</h4>
-	 			<form action ="/crumblrPost" modelAttribute="CrumblrPost" enctype="multipart/form-data" method="post">
-	 				<input type="hidden" id ="owner" name="owner" value="<%= session.getAttribute("username") %>">
-	 				<!--  <input type="text" name="content" id="content"> -->
-	 				<textarea class="lockdown" name="content" id="content"></textarea>
-	 				<input type="file" id="file" name="file">
-	 				<input class="button" type="submit" value="Post">
-	 			</form>
- 			</div>
- 			<hr>
- 			<%} %>
- 			<!-- Posts Are Written Here -->
  			<% 
  			List<CrumblrPost> crumbleWall = new ArrayList<CrumblrPost>();
 			crumbleWall = (ArrayList)session.getAttribute("posts");

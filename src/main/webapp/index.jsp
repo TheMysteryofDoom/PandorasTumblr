@@ -22,13 +22,20 @@
 			<img src="../images/crumblr.png">
 			<p class="whiteFont"><b>Let's all play together.<br>
 			You'll want to stay forever.</b></p>
+		</div> 	
+	</div>
+	<div class="row">
+		<div class="twelve columns" align="center">
 			<form action="pages/login.jsp">
 			<input class="buttonOverride01" type="submit" value="Log In">
 			</form>
+		</div> 	
+	</div>
+	<div class="row">
+		<div class="twelve columns" align="center">
 			<form action="pages/register.jsp">
 			<input class="buttonOverride01" type="submit" value="Register">
 			</form>
-			<button class="buttonOverride01">Register with Facebook</button>
 		</div> 	
 	</div>
 </div>

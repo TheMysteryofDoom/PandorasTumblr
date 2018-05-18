@@ -20,16 +20,21 @@
 <body class ="deepOrange">
 <div class="container deepOrange">
 	<div class="row">
-		<div class="two columns">
+		<div class="three columns">
 			<form action="/visitUser" method="post">
 			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-			<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="<%= session.getAttribute("username") %>">
 			</form>
 		</div>
-		<div class="two columns">
+		<div class="three columns">
 			<form action="/timeline" method="post">
 			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-			<input class="buttonOverride01" type="submit" value="Your Timeline">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="Your Timeline">
+			</form>
+		</div>
+		<div class="three columns">
+			<form action="/logout" method="post">
+				<input class="buttonOverride01 u-pull-max-width" type="submit" value="Sign Out"/>
 			</form>
 		</div>
 	</div>
@@ -60,9 +65,6 @@
  			<%}}%>
  			<form action="/search" method="post">
 				<input type="text" name="search" id="search" placeholder="Search Crumblr"/><input class="button" type="submit" value="Search"/>
-			</form>
- 			<form action="/logout" method="post">
-				<input class="button" type="submit" value="Sign Out"/>
 			</form>
  		</div>
  		<div class="eight columns"> <!-- Right Half of the Screen -->

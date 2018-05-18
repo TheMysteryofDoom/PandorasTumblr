@@ -20,10 +20,25 @@
 </head>
 <body class ="deepOrange">
 <div class="container deepOrange">
-	<form action="/visitUser" method="post">
-	<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-	<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
-	</form>
+	<div class="row">
+		<div class="three columns">
+			<form action="/visitUser" method="post">
+			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="<%= session.getAttribute("username") %>">
+			</form>
+		</div>
+		<div class="three columns">
+			<form action="/timeline" method="post">
+			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
+			<input class="buttonOverride01 u-pull-max-width" type="submit" value="Your Timeline">
+			</form>
+		</div>
+		<div class="three columns">
+			<form action="/logout" method="post">
+				<input class="buttonOverride01 u-pull-max-width" type="submit" value="Sign Out"/>
+			</form>
+		</div>
+	</div>
 </div>
 <div class ="container">
 	<div class="row">
