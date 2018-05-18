@@ -15,13 +15,6 @@
 <script type="text/javascript" src="../javascript/login.js"></script>
 </head>
 <body class ="grimoire">
-<div class="container">
-	<div class="row">
-		<form>
-			<input type="text" id="search" name="search"> <input type="submit" value="Search">
-		</form>
-	</div>
-</div>
 <div id="home" class="container">
 	<br><br><br><br>
 	<div class="row">

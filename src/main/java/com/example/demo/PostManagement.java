@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,9 @@ public class PostManagement {
 	
 	@Autowired
 	private CrumblrPostRepository repository;
+	
+	@Autowired
+	private CrumblrFollowersRepository followingRepo;
 	
 	public void savePost(CrumblrPost me){
 		//System.out.println(me.getUsername());
@@ -56,6 +60,25 @@ public class PostManagement {
 	
 	public void delete(String id){
 		repository.deleteById(id);
+	}
+	
+	public void attachFollowedUserPosts(HttpSession session){
+		
+		CrumblrFollowers following = followingRepo.findByUsername(session.getAttribute("username").toString());
+		
+		List<CrumblrPost> everything = repository.findAll();
+		List<CrumblrPost> finale = new ArrayList<CrumblrPost>();
+		if (following.getFollowers().iterator().hasNext() && everything.iterator().hasNext()){
+			for (CrumblrPost post: everything){
+				for (String user: following.getFollowers()){
+					if (user.equals(post.getOwner())){
+						finale.add(post);
+						break;
+					}
+				}
+			}
+		}
+		session.setAttribute("posts",finale);
 	}
 
 }

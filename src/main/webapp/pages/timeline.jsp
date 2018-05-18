@@ -19,25 +19,15 @@
 </head>
 <body class ="deepOrange">
 <div class="container deepOrange">
-	<div class="row">
-		<div class="two columns">
-			<form action="/visitUser" method="post">
-			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-			<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
-			</form>
-		</div>
-		<div class="two columns">
-			<form action="/timeline" method="post">
-			<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
-			<input class="buttonOverride01" type="submit" value="Your Timeline">
-			</form>
-		</div>
-	</div>
+	<form action="/visitUser" method="post">
+	<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("username") %>">
+	<input class="buttonOverride01" type="submit" value="<%= session.getAttribute("username") %>">
+	</form>
 </div>
 <div class ="container">
 	<div class="row">
 		<div class="twelve columns" align="center">
-		<h1><%= session.getAttribute("currentView") %>'s Crumblr</h1>
+		<h1><%= session.getAttribute("currentView") %>'s Timeline</h1>
 		<br>
 		</div>
 	</div>

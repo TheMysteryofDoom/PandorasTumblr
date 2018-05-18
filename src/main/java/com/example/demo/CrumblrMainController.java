@@ -142,5 +142,13 @@ public class CrumblrMainController {
 		followRepository.save(myset);
 		return "pages/crumbleboard.jsp";
 	}
+	
+	@RequestMapping(value="timeline",method = RequestMethod.POST)
+	public String timeline(HttpSession session){
+		
+		session.setAttribute("currentView", session.getAttribute("username").toString());
+		postManagement.attachFollowedUserPosts(session);
+		return "pages/timeline.jsp";
+	}
 
 }
