@@ -72,6 +72,14 @@ public class CrumblrMainController {
 		
 		session.setAttribute("currentView", user);
 		postManagement.attachPosts(session, user);
+		CrumblrFollowers checker = followRepository.findByUsername(session.getAttribute("username").toString());
+		if(checker.getFollowers().contains(user)){
+			System.out.println("Totes Following");
+			session.setAttribute("following", "true");
+		} else {
+			System.out.println("Not Following");
+			session.setAttribute("following", "false");
+		}
 		
 		return "pages/crumbleboard.jsp";
 		
@@ -111,6 +119,7 @@ public class CrumblrMainController {
 		
 		System.out.println("Now Follwoing: "+ pageOwner);
 		myset.addFollower(pageOwner);
+		session.setAttribute("following", "true");
 		postManagement.attachPosts(session, session.getAttribute("currentView").toString());
 		followRepository.save(myset);
 		return "pages/crumbleboard.jsp";
@@ -128,6 +137,7 @@ public class CrumblrMainController {
 		
 		
 		myset.removeFollower(pageOwner);
+		session.setAttribute("following", "false");
 		postManagement.attachPosts(session, session.getAttribute("currentView").toString());
 		followRepository.save(myset);
 		return "pages/crumbleboard.jsp";

@@ -36,14 +36,18 @@
  			
  			<p><%= session.getAttribute("currentView") %></p>
  			<p>Description<p>
- 			<form action="/follow" method="post">
- 			<input type="hidden" name="pageOwner" id="pageOwner" value="<%= session.getAttribute("currentView") %>">
- 			<input class="u-max-full-width" type="image" id="submit" src="../images/FollowButton.png">
- 			</form>
- 			<form action="/unfollow" method="post">
- 			<input type="hidden" name="pageOwner" id="pageOwner" value="<%= session.getAttribute("currentView") %>">
- 			<input class="u-max-full-width" type="image" id="submit" src="../images/FollowButtonFollowing.png">
- 			</form>
+ 			<% if (!(session.getAttribute("currentView").equals(session.getAttribute("username")))){ 
+	 			if (session.getAttribute("following").toString().equals("false")){%>
+		 			<form action="/follow" method="post">
+			 			<input type="hidden" name="pageOwner" id="pageOwner" value="<%= session.getAttribute("currentView") %>">
+			 			<input class="u-max-full-width" type="image" id="submit" src="../images/FollowButton.png">
+		 			</form>
+		 			<%}else{ %>
+			 		<form action="/unfollow" method="post">
+			 			<input type="hidden" name="pageOwner" id="pageOwner" value="<%= session.getAttribute("currentView") %>">
+			 			<input class="u-max-full-width" type="image" id="submit" src="../images/FollowButtonFollowing.png">
+		 			</form>
+ 			<%}}%>
  			<form action="/search" method="post">
 				<input type="text" name="search" id="search" placeholder="Search Crumblr"/><input class="button" type="submit" value="Search"/>
 			</form>
