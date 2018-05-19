@@ -70,12 +70,13 @@ public class PostManagement {
 		List<CrumblrPost> finale = new ArrayList<CrumblrPost>();
 		if (following.getFollowers().iterator().hasNext() && everything.iterator().hasNext()){
 			for (CrumblrPost post: everything){
-				for (String user: following.getFollowers()){
-					if (user.equals(post.getOwner())){
+				//for (String user: following.getFollowers()){
+					//if (user.equals(post.getOwner())){
+					if (following.getFollowers().contains(post.getOwner())){
 						finale.add(post);
-						break;
+						//break;
 					}
-				}
+				//}
 			}
 		}
 		session.setAttribute("posts",finale);
