@@ -50,6 +50,7 @@
  		<div class="four columns whiteout postFrame"> <!-- Left Half of the Screen -->
  			
  			<p><%= session.getAttribute("currentView") %></p>
+ 			<p><%= session.getAttribute("name") %></p>
  			<% if (!(session.getAttribute("currentView").equals(session.getAttribute("username")))){ 
 	 			if (session.getAttribute("following").toString().equals("false")){%>
 		 			<form action="/follow" method="post">

@@ -51,7 +51,7 @@
  		<div class="four columns whiteout postFrame"> <!-- Left Half of the Screen -->
  			
  			<p><%= session.getAttribute("currentView") %></p>
- 			<p>Description<p>
+ 			<p><%= session.getAttribute("name") %><p>
  			<form action="/search" method="post">
 				<input type="text" name="search" id="search" placeholder="Search Crumblr"/><input class="button" type="submit" value="Search"/>
 			</form>

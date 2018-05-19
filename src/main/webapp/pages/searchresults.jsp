@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import ="java.util.ArrayList"%>
+<%@ page import ="java.util.List"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,13 +40,18 @@
 	<div class="row">
 		<div class = "twelve columns">
 			<h1><%= session.getAttribute("searchResults") %> Search Result/s</h1>
-			<% for (int i = 0;i<Integer.parseInt(session.getAttribute("searchResults").toString());i++){ %>
+			<% List<String> crumbleWall = new ArrayList<String>();
+			crumbleWall = (ArrayList)session.getAttribute("foundUsers");
+			
+			if (crumbleWall.iterator().hasNext()){
+				for(String posts : crumbleWall){
+			%>
 				<form action="/visitUser" method="post">
-					<input type="hidden" name="userView" id="userView" value="<%= session.getAttribute("userSearch") %>">
-					<%= session.getAttribute("userSearch") %>
+					<input type="hidden" name="userView" id="userView" value="<%= posts %>">
+					<%= posts %>
 					<input type="submit" value="Visit">
 				</form>
-			<% } %>
+			<%}} %>
 		</div>
 	</div>
 </div>

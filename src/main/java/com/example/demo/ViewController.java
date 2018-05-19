@@ -52,6 +52,7 @@ public class ViewController {
 			session = newSession;
 			session.setAttribute("username", user.getUsername());
 			session.setAttribute("currentView", user.getUsername());
+			session.setAttribute("name", user.getFirstName());
 			//========================
 			System.out.println("This session belongs to "+session.getAttribute("username").toString());
 			//=====This code block is for Post Writing======

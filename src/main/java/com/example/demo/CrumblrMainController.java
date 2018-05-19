@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,18 +52,34 @@ public class CrumblrMainController {
 	
 	@RequestMapping(value = "search" ,method = RequestMethod.POST)
 	public String searchEverything(@RequestParam("search") String search, HttpSession session){
-		CrumblrUser searched;
+		//CrumblrUser searched;
 		System.out.println(search);
+		List<String> foundUsers = new ArrayList<String>();
 		int searchResults = 0; //Search Results Counter
-		try{
+		/*try{
 			searched = repository.findByUsername(search);
 			session.setAttribute("userSearch", searched.getUsername());
+			foundUsers.add(searched.getUsername());
 			searchResults++;
 		} catch (Exception s){
 			System.out.println("Username Not Found");
+		}*/
+		try{
+			List<CrumblrUser> everything = repository.findAll();
+			for (CrumblrUser person: everything){
+				if (person.getFirstName().toLowerCase().contains(search.toLowerCase())||person.getUsername().toLowerCase().contains(search.toLowerCase())){
+					if (!(foundUsers.contains(person.getUsername()))){
+						foundUsers.add(person.getUsername());
+						searchResults++;
+					}
+				}
+			}
+		} catch (Exception f){
+			
 		}
 		
 		session.setAttribute("searchResults", searchResults);
+		session.setAttribute("foundUsers", foundUsers);
 		
 		return "pages/searchresults.jsp";
 		
@@ -71,6 +89,7 @@ public class CrumblrMainController {
 	public String visit(@RequestParam("userView") String user, HttpSession session){
 		
 		session.setAttribute("currentView", user);
+		session.setAttribute("name", repository.findByUsername(user).getFirstName());
 		postManagement.attachPosts(session, user);
 		CrumblrFollowers checker = followRepository.findByUsername(session.getAttribute("username").toString());
 		if(checker.getFollowers().contains(user)){
@@ -147,6 +166,7 @@ public class CrumblrMainController {
 	public String timeline(HttpSession session){
 		
 		session.setAttribute("currentView", session.getAttribute("username").toString());
+		session.setAttribute("name", repository.findByUsername(session.getAttribute("username").toString()).getFirstName());
 		postManagement.attachFollowedUserPosts(session);
 		return "pages/timeline.jsp";
 	}
