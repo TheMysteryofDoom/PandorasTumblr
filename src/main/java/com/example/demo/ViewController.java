@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ViewController {
@@ -38,15 +39,26 @@ public class ViewController {
     }
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute("newCrumblrUser")CrumblrUser user, HttpServletRequest request, HttpSession session) {
+    public String login(@ModelAttribute("newCrumblrUser")CrumblrUser user,@RequestParam("username")String email, HttpServletRequest request, HttpSession session) {
 		//===================
 		session.invalidate();
 		//===================
+		Boolean correctPass = false;
 		System.out.println("This is the View controller Servlet mapped to Login");
-		Boolean correctPass = authentication.passCheck(user);
+		if (email.contains("@")){
+			correctPass = authentication.passCheck(user,email);
+			//user = authentication.
+		} else {
+			correctPass = authentication.passCheck(user);
+		}
+		//Boolean correctPass = authentication.passCheck(user);
 		
 		if (correctPass == true){
-			user = authentication.grabDetails(user);
+			if (email.contains("@")){
+				user = authentication.grabDetailsByEmail(email);
+			} else {
+				user = authentication.grabDetails(user);
+			}
 			//========================
 			HttpSession newSession = request.getSession();
 			session = newSession;

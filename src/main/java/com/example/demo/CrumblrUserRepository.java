@@ -6,5 +6,6 @@ public interface CrumblrUserRepository extends MongoRepository<CrumblrUser, Stri
 	
 	CrumblrUser findByUsername(String username);
 	CrumblrUser findByFirstName(String firstName);
+	CrumblrUser findByEmail(String email);
 
 }
