@@ -22,14 +22,10 @@ public class PostManagement {
 	private CrumblrFollowersRepository followingRepo;
 	
 	public void savePost(CrumblrPost me){
-		//System.out.println(me.getUsername());
 		repository.save(me);
 	}
 	
 	public void attachPosts(HttpSession session){
-		//List<CrumblrPost> postSet = repository.findByOwner(session.getAttribute("username").toString());
-		//Collections.reverse(postSet);
-		//session.setAttribute("posts", postSet);
 		session.setAttribute("posts", repository.findByOwner(session.getAttribute("username").toString()));
 	}
 	
@@ -40,7 +36,6 @@ public class PostManagement {
 	public void attachPostByID(HttpSession session, String postID){
 		CrumblrPost commentTarget = repository.findById(postID).get();
 		session.setAttribute("commentOn", commentTarget);
-		//Problematic Area (Class cast exception)
 	}
 	
 	public String URLFinder(String postText) {
@@ -48,12 +43,9 @@ public class PostManagement {
         StringBuilder finalOutput = new StringBuilder();
         for( String item : parts ) try {
             URL url = new URL(item);
-            // If possible then replace with anchor...
             finalOutput.append("<a href=\"" + url + "\">"+ url + "</a> " );
-            //System.out.print("<a href=\"" + url + "\">"+ url + "</a> " );    
         } catch (MalformedURLException e) {
         	finalOutput.append(item + " " );
-            //System.out.print( item + " " );
         }
         return finalOutput.toString();
     }
@@ -70,13 +62,9 @@ public class PostManagement {
 		List<CrumblrPost> finale = new ArrayList<CrumblrPost>();
 		if (following.getFollowers().iterator().hasNext() && everything.iterator().hasNext()){
 			for (CrumblrPost post: everything){
-				//for (String user: following.getFollowers()){
-					//if (user.equals(post.getOwner())){
-					if (following.getFollowers().contains(post.getOwner())){
-						finale.add(post);
-						//break;
-					}
-				//}
+				if (following.getFollowers().contains(post.getOwner())){
+					finale.add(post);
+				}
 			}
 		}
 		session.setAttribute("posts",finale);
